@@ -23,7 +23,7 @@ library(agricolae)
 
 #ggplot set up--------------------------
 
-theme_er <- function() {  # this for all the elements common across plots
+theme_mb <- function() {  # this for all the elements common across plots
   theme_bw() %+replace%
     theme(legend.position = "right",
           legend.key=element_blank(),
