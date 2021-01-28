@@ -53,3 +53,23 @@ theme_mb <- function() {  # this for all the elements common across plots
 data_csv = read.csv("processed/2021_1_14_connectivityvolumes_ER.csv")
 
 # Processing data-----------------------
+
+# ggplots-----------------------
+data_csv %>% 
+  filter(conn_pore_perc>"0.05") %>% 
+  ggplot() +
+  geom_point(aes(x=conn_pore_perc, 
+                 y=conn_water_perc, color= water, size=3, alpha=0.5)) +
+  labs(y="Connected water, %", x="Connected pore, %") +
+  theme_mb() + 
+  scale_color_manual(values = pnw_palette("Bay", 2))
+
+data2 = data_csv %>% 
+  filter(conn_pore_perc>"0.05") %>% 
+  ggplot() +
+  geom_point(aes(x=conn_pore_perc, 
+                 y=conn_water_perc, color= water, size=3, alpha=0.5)) +
+  labs(y="Connected water, %", x="Connected pore, %") +
+  theme_mb() + 
+  scale_color_manual(values = pnw_palette("Bay", 2))
+data2
