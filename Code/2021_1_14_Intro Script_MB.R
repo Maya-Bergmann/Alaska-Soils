@@ -9,6 +9,7 @@
 library(usethis)
 library(devtools)
 library(tidyverse)
+library(plyr)
 
 #ggplot color packages
 install.packages("nord")
@@ -50,7 +51,8 @@ theme_mb <- function() {  # this for all the elements common across plots
 
 # Loading data--------------------------
 
-data_csv = read.csv("processed/2021_1_14_connectivityvolumes_ER.csv")
+data_csv = read.csv("Processed/2021_1_14_connectivityvolumes_ER.csv")
+ghg_csv = read.csv("Processed/ghg_depth.csv")
 
 # Processing data-----------------------
 
@@ -73,3 +75,17 @@ data2 = data_csv %>%
   theme_mb() + 
   scale_color_manual(values = pnw_palette("Bay", 2))
 data2
+
+
+# ggplots and processing: respiration-----------------------
+ghg_csv %>% 
+  mutate(day = factor(day, levels = c("day1", "day4", "day7", "day14"))) %>% 
+  ggplot(aes(x = gain_ug_g_oc, y = mid, 
+             color = day)) + 
+  geom_line(orientation = "y") +
+  geom_point() +
+  scale_color_manual(values = (PNWColors::pnw_palette("Bay", 4))) + 
+  ggtitle("respiration") +
+  theme_mb() +
+  facet_grid(site~trmt) +
+  scale_y_reverse()
